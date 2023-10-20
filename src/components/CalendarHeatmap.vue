@@ -208,16 +208,20 @@ export default /*#__PURE__*/ defineComponent({
       type: Number,
       default: 365,
     },
+    squareSize: {
+      type: Number,
+      default: 10,
+    },
     darkMode: Boolean,
   },
   emits: ["dayClick"],
   setup(props) {
-    const SQUARE_BORDER_SIZE = Heatmap.SQUARE_SIZE / 5,
-      SQUARE_SIZE = Heatmap.SQUARE_SIZE + SQUARE_BORDER_SIZE,
-      LEFT_SECTION_WIDTH = Math.ceil(Heatmap.SQUARE_SIZE * 2.5),
+    const SQUARE_BORDER_SIZE = props.squareSize / 5,
+      SQUARE_SIZE = props.squareSize + SQUARE_BORDER_SIZE,
+      LEFT_SECTION_WIDTH = Math.ceil(props.squareSize * 2.5),
       RIGHT_SECTION_WIDTH = SQUARE_SIZE * 3,
-      TOP_SECTION_HEIGHT = Heatmap.SQUARE_SIZE + Heatmap.SQUARE_SIZE / 2,
-      BOTTOM_SECTION_HEIGHT = Heatmap.SQUARE_SIZE + Heatmap.SQUARE_SIZE / 2,
+      TOP_SECTION_HEIGHT = props.squareSize + props.squareSize / 2,
+      BOTTOM_SECTION_HEIGHT = props.squareSize + props.squareSize / 2,
       yearWrapperTransform = `translate(${LEFT_SECTION_WIDTH}, ${TOP_SECTION_HEIGHT})`,
       svg = ref<null | SVGElement>(null),
       now = ref(new Date()),
@@ -389,8 +393,8 @@ export default /*#__PURE__*/ defineComponent({
     watch(
       rangeColor,
       (rc) =>
-        (legendViewbox.value = `0 0 ${Heatmap.SQUARE_SIZE * (rc.length + 1)} ${
-          Heatmap.SQUARE_SIZE
+        (legendViewbox.value = `0 0 ${props.squareSize * (rc.length + 1)} ${
+          props.squareSize
         }`),
       { immediate: true }
     );
